@@ -1,4 +1,5 @@
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
 use android_logger::Config;
 use log::LevelFilter;
