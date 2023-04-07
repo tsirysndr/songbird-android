@@ -3,6 +3,8 @@ Cargo.lock
 
 build
 
+jniLibs
+
 *.iml
 .gradle
 /local.properties

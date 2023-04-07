@@ -13,7 +13,19 @@ jni = { version = "0.21.1", default-features = false }
 
 [dependencies]
 android_logger = "0.13.1"
+futures-channel = "0.3.28"
 log = "0.4.17"
 music-player-graphql = "0.1.8"
+music-player-migration = "0.1.5"
+music-player-playback = "0.1.10"
 music-player-server = "0.1.13"
+music-player-settings = "0.1.2"
+music-player-storage = "0.1.4"
+music-player-tracklist = "0.1.8"
 music-player-webui = "0.1.12"
+tokio = { version = "1.21.0", features = ["full"] }
+tungstenite = "0.17.3"
+sea-orm = { version = "0.9.2", features = ["runtime-tokio-rustls", "sqlx-sqlite"] }
+anyhow = "1.0.70"
+serde_json = "1.0.95"
+music-player-discovery = "0.1.2"
