@@ -1,4 +1,5 @@
 #[no_mangle]
+#[export_name = "example"]
 extern "C" fn example() {
     println!("Hello Android!");
 }
