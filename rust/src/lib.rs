@@ -9,7 +9,7 @@ use std::thread;
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_start"]
-pub extern "C" fn start() {
+pub extern fn start() {
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
     debug!(
         r#"
@@ -33,7 +33,7 @@ A simple music player written in Rust"#
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_start_blocking"]
-pub extern "C" fn start_blocking() {
+pub extern fn start_blocking() {
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
     debug!(
         r#"
@@ -55,7 +55,7 @@ A simple music player written in Rust"#
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_example"]
-pub extern "C" fn example() {
+pub extern fn example() {
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
     debug!("Hello Android!");
     debug!("this is a debug {}", "message");

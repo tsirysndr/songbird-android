@@ -6,5 +6,8 @@ class Songbird {
             System.loadLibrary("songbird_android");
         }
         external fun example()
+        external fun start()
+
+        external fun start_blocking()
     }
 }
