@@ -9,8 +9,12 @@ use std::thread;
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_start"]
-pub extern fn start() {
+pub extern "C" fn start() {
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
+    debug!(
+        ">> config dir {}",
+        dirs::config_dir().unwrap().to_str().unwrap()
+    );
     debug!(
         r#"
     __  ___           _      ____  __                     
@@ -22,6 +26,7 @@ pub extern fn start() {
 
 A simple music player written in Rust"#
     );
+    debug!("Starting server in a new thread");
     thread::spawn(|| {
         let runtime = tokio::runtime::Builder::new_multi_thread()
             .enable_all()
@@ -32,8 +37,8 @@ A simple music player written in Rust"#
 }
 
 #[no_mangle]
-#[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_start_blocking"]
-pub extern fn start_blocking() {
+#[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_start_1blocking"]
+pub extern "C" fn start_blocking() {
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
     debug!(
         r#"
@@ -55,7 +60,7 @@ A simple music player written in Rust"#
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_example"]
-pub extern fn example() {
+pub extern "C" fn example() {
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
     debug!("Hello Android!");
     debug!("this is a debug {}", "message");
