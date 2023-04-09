@@ -5,6 +5,8 @@ pub mod server;
 
 use android_logger::Config;
 use log::LevelFilter;
+use migration::{cli::run_migrate, Migrator, MigratorTrait};
+use sea_orm::Database;
 use std::thread;
 
 #[no_mangle]
@@ -56,7 +58,26 @@ A simple music player written in Rust"#
         .build()
         .unwrap();
     //runtime.block_on(server::start_all()).unwrap();
-    runtime.block_on(migration::run());
+    //runtime.block_on(migration::run());
+    runtime.block_on(async {
+        let url = "sqlite:/storage/emulated/0/Android/data/com.tsirysndr.songbird/files/music-player.sqlite3";
+        match Database::connect(url).await {
+            Ok(db) => {
+                debug!("Connected to database");   
+                match Migrator::up(&db, None).await {
+                    Ok(_) => {
+                        debug!("Migrations ran successfully");
+                    }
+                    Err(e) => {
+                        error!("Error: {:?}", e);
+                    }
+                }
+            }
+            Err(e) => {
+                error!("Error: {:?}", e);
+            }
+        }
+    });
 }
 
 #[no_mangle]
