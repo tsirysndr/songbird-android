@@ -59,6 +59,9 @@ pub async fn start_all() -> anyhow::Result<()> {
     let cloned_cmd_rx = Arc::clone(&cmd_rx);
     let cmd_tx_ws = Arc::clone(&cloned_cmd_tx);
     let cmd_tx_webui = Arc::clone(&cloned_cmd_tx);
+
+    debug!(">> Setting up player...");
+
     let (_, _) = Player::new(
         move || backend(None, audio_format),
         move |event| {
@@ -113,8 +116,11 @@ pub async fn start_all() -> anyhow::Result<()> {
     let db_ws = Arc::clone(&db);
     let peer_map_ws = Arc::clone(&peer_map);
 
+    debug!(">> Registering services...");
+
     register_services();
 
+    debug!(">> Starting web server...");
     // Start the web server
     thread::spawn(move || {
         let runtime = tokio::runtime::Builder::new_multi_thread()
@@ -136,6 +142,9 @@ pub async fn start_all() -> anyhow::Result<()> {
             }
         }
     });
+
+    debug!(">> Starting web socket server...");
+
     // Spawn a thread to handle the player events
     thread::spawn(move || {
         let runtime = tokio::runtime::Builder::new_multi_thread()
@@ -151,7 +160,12 @@ pub async fn start_all() -> anyhow::Result<()> {
             }
         }
     });
+
+    debug!(">> Starting web ui server...");
+
     start_webui(cmd_tx_webui, tracklist_webui).await?;
+
+    debug!(">> Starting web ui server... (done)");
 
     Ok(())
 }
