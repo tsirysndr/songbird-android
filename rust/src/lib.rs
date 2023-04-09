@@ -55,7 +55,8 @@ A simple music player written in Rust"#
         .enable_all()
         .build()
         .unwrap();
-    runtime.block_on(server::start_all()).unwrap();
+    //runtime.block_on(server::start_all()).unwrap();
+    runtime.block_on(migration::run());
 }
 
 #[no_mangle]
