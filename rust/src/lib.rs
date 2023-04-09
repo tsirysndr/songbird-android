@@ -5,8 +5,6 @@ pub mod server;
 
 use android_logger::Config;
 use log::LevelFilter;
-use migration::{cli::run_migrate, Migrator, MigratorTrait};
-use sea_orm::Database;
 use std::thread;
 
 #[no_mangle]
