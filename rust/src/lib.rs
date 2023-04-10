@@ -5,7 +5,9 @@ pub mod server;
 
 use android_logger::Config;
 use log::LevelFilter;
+use music_player_settings::{read_settings, Settings};
 use std::thread;
+use walkdir::WalkDir;
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbird_Songbird_00024Companion_start"]
@@ -65,4 +67,17 @@ pub extern "C" fn example() {
     debug!("Hello Android!");
     debug!("this is a debug {}", "message");
     error!("this is printed by default");
+    let config = read_settings().unwrap();
+    let settings = config.try_deserialize::<Settings>().unwrap();
+    debug!(">> scanning music library...");
+    for (_, entry) in WalkDir::new(&settings.music_directory)
+        .follow_links(true)
+        .into_iter()
+        .filter_map(|e| e.ok())
+        .enumerate()
+    {
+        let path = format!("{}", entry.path().display());
+        debug!(">> {}", path);
+    }
+    debug!(">> done scanning music library");
 }
