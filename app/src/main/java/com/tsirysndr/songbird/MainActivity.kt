@@ -1,7 +1,9 @@
 package com.tsirysndr.songbird
 
 import android.Manifest
+import android.content.ContextWrapper
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
@@ -26,10 +28,8 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ActivityCompat.requestPermissions(this, arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE),
-            EXTERNAL_STORAGE_PERMISSION_CODE)
-        example()
-        start()
+        // example()
+        // start_blocking()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
