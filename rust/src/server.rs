@@ -52,16 +52,24 @@ pub async fn start_all() -> anyhow::Result<()> {
     .await?;
     db.create_indexes().await;
 
-    let db_conn = Database::new().await;
-    let searcher = Searcher::new();
-    match scan_music_library(true, db_conn, searcher).await {
-        Ok(_) => {
-            debug!("Music library scanned successfully");
-        }
-        Err(e) => {
-            error!("Error scanning music library: {}", e);
-        }
-    };
+    thread::spawn(move || {
+        let runtime = tokio::runtime::Builder::new_multi_thread()
+            .enable_all()
+            .build()
+            .unwrap();
+        runtime.block_on(async {
+            let db_conn = Database::new().await;
+            let searcher = Searcher::new();
+            match scan_music_library(true, db_conn, searcher).await {
+                Ok(_) => {
+                    debug!("Music library scanned successfully");
+                }
+                Err(e) => {
+                    error!("Error scanning music library: {}", e);
+                }
+            };
+        });
+    });
 
     let db = Arc::new(Mutex::new(Database::new().await));
     let tracklist = Arc::new(std::sync::Mutex::new(Tracklist::new_empty()));

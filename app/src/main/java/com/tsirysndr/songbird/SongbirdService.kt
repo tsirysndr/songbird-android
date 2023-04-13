@@ -1,0 +1,32 @@
+package com.tsirysndr.songbird
+
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
+import com.tsirysndr.songbird.Songbird.Companion.example
+import com.tsirysndr.songbird.Songbird.Companion.start_blocking
+
+class SongbirdService : Service() {
+    private var backgroundThread: Thread? = null
+    companion object {
+        init {
+            System.loadLibrary("songbird_android");
+        }
+    }
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+       backgroundThread = Thread {
+            start_blocking()
+       }
+        backgroundThread!!.start()
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backgroundThread?.interrupt()
+    }
+
+    override fun onBind(intent: Intent): IBinder? {
+        return null
+    }
+}
