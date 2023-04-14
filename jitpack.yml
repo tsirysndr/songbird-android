@@ -1,0 +1,6 @@
+jdk:
+  - openjdk11
+before_install:
+  - wget https://github.com/tsirysndr/songbird-android-rs/releases/download/v0.1.0/songbird-android-rs.tar.gz
+  - tar -xzf songbird-android-rs.tar.gz
+  - mv jniLibs app/src/main/
