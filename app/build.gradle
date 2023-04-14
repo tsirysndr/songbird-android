@@ -9,7 +9,7 @@ group = 'com.github.tsirysndr'
 version = '1.0'
 
 android {
-    namespace 'com.tsirysndr.songbird'
+    namespace 'com.tsirysndr.songbirdlib'
     compileSdk 33
 
     defaultConfig {
