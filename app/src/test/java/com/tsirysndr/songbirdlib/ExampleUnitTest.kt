@@ -1,4 +1,4 @@
-package com.tsirysndr.songbird
+package com.tsirysndr.songbirdlib
 
 import org.junit.Test
 

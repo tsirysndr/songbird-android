@@ -1,4 +1,4 @@
-package com.tsirysndr.songbird
+package com.tsirysndr.songbirdlib
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

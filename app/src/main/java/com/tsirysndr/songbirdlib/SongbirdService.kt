@@ -1,10 +1,9 @@
-package com.tsirysndr.songbird
+package com.tsirysndr.songbirdlib
 
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.tsirysndr.songbird.Songbird.Companion.example
-import com.tsirysndr.songbird.Songbird.Companion.start_blocking
+import com.tsirysndr.songbirdlib.Songbird.Companion.start_blocking
 
 class SongbirdService : Service() {
     private var backgroundThread: Thread? = null
