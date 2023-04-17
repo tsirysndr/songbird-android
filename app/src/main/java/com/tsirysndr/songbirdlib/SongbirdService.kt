@@ -14,7 +14,7 @@ class SongbirdService : Service() {
     }
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
        backgroundThread = Thread {
-           val appDir = applicationContext.filesDir
+           val appDir = applicationContext.getExternalFilesDir(null)
            start_blocking("$appDir/songbird.sock")
        }
         backgroundThread!!.start()
