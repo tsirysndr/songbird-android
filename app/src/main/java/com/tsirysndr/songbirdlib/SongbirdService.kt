@@ -14,7 +14,7 @@ class SongbirdService : Service() {
     }
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
        backgroundThread = Thread {
-           start_blocking("/sdcard/Android/data/com.tsirysndr.songbird/files/songbird.sock")
+           start_blocking()
        }
         backgroundThread!!.start()
         return START_STICKY
