@@ -8,6 +8,6 @@ class Songbird {
         external fun example()
         external fun start()
 
-        external fun start_blocking()
+        external fun start_blocking(socket_path: String)
     }
 }

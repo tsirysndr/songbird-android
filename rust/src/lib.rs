@@ -7,7 +7,10 @@ pub mod server;
 use android_logger::Config;
 use log::LevelFilter;
 use music_player_settings::{read_settings, Settings};
-use std::thread;
+use std::{
+    ffi::{c_char, CStr},
+    thread,
+};
 use walkdir::WalkDir;
 
 use crate::play::play;
@@ -43,7 +46,13 @@ A simple music player written in Rust"#
 
 #[no_mangle]
 #[export_name = "Java_com_tsirysndr_songbirdlib_Songbird_00024Companion_start_1blocking"]
-pub extern "C" fn start_blocking() {
+pub extern "C" fn start_blocking(socket_path: *const c_char) {
+    let c_str = unsafe {
+        assert!(!socket_path.is_null());
+        CStr::from_ptr(socket_path)
+    };
+    let socket_path = c_str.to_string_lossy().into_owned();
+
     android_logger::init_once(Config::default().with_max_level(LevelFilter::Trace));
     debug!(
         r#"
@@ -60,7 +69,9 @@ A simple music player written in Rust"#
         .enable_all()
         .build()
         .unwrap();
-    runtime.block_on(server::start_all()).unwrap();
+    runtime
+        .block_on(server::start_over_uds(socket_path))
+        .unwrap();
 }
 
 #[no_mangle]
